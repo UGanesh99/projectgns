@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Secret 🔐</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI";
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: black;
+    color: white;
+}
+
+/* Glass container */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 0, 100, 0.4);
+    width: 320px;
+}
+
+/* Typing title */
+#title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Input */
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Button */
+button {
+    margin-top: 15px;
+    padding: 12px;
+    width: 100%;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(45deg, #ff4d6d, #ff758c);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px pink;
+}
+
+/* Error */
+.error {
+    margin-top: 10px;
+    color: #ffaaaa;
+}
+
+/* ❤️ Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: floatUp linear forwards;
+    opacity: 0.8;
+}
+
+/* Animation */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="title"></h1>
+
+    <form method="POST" onsubmit="clickSound()">
+        {% csrf_token %}
+        <h3>THIS IS FOR MY ANGEL </h3><br>
+        <input type="password" name="password" placeholder="Enter password">
+        <button type="submit">OPEN BABY ❤️</button>
+    </form>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+</div>
+
+<audio id="click" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+<script>
+setInterval(function () {
+    var text = document.createElement("div");
+
+    text.innerHTML = "❤️Soniya❤️";
+
+    text.style.position = "fixed";
+    text.style.bottom = "0px";
+    text.style.left = Math.random() * window.innerWidth + "px";
+
+    text.style.fontSize = (Math.random() * 20 + 18) + "px";
+    text.style.color = "#ff4d6d";
+    text.style.fontWeight = "bold";
+    text.style.textShadow = "0 0 10px pink";
+    text.style.zIndex = "9999";
+
+    document.body.appendChild(text);
+
+    let move = 0;
+
+    let interval = setInterval(function () {
+        move += 2;
+
+        // Move up
+        text.style.bottom = move + "px";
+
+        // Slight left-right movement (realistic)
+        text.style.left = (parseFloat(text.style.left) + Math.sin(move / 20)) + "px";
+
+        // Fade out
+        text.style.opacity = 1 - move / 500;
+
+        if (move > 500) {
+            clearInterval(interval);
+            text.remove();
+        }
+    }, 20);
+
+}, 300);
+</script>
+
+</body>
+</html>
